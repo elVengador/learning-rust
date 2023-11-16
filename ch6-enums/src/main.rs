@@ -34,5 +34,62 @@ fn main() {
     my_message.call();
 
     // define an enum to represent null values
-    let my_null_value:Option<i8> = None;
+    let my_null_value: Option<i8> = None;
+
+    // match control flow
+
+    #[derive(Debug)]
+    enum UsStates {
+        Alabama,
+        Alaska,
+    }
+
+    enum Coin {
+        Penny,
+        Nickel,
+        Dime,
+        Quarter(UsStates),
+    }
+
+    fn value_in_cents(coin: Coin) -> i8 {
+        match coin {
+            Coin::Penny => 1,
+            Coin::Nickel => 5,
+            Coin::Dime => 10,
+            Coin::Quarter(state) => {
+                println!("Us State: {:?}", state);
+                25
+            }
+        }
+    }
+
+    println!("cents of Dime: {}", value_in_cents(Coin::Dime));
+    println!("cents of Dime: {}", value_in_cents(Coin::Quarter(UsStates::Alabama)));
+
+    // match option<T>
+    fn plus_one (x:Option<i8>)->Option<i8>{
+        match x {// into match should be defined every possible case
+            None=>None,
+            Some(i)=>Some(i+1)
+        }
+    }
+
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+
+    // match other values
+    let dice_roll = 9;
+    match dice_roll {
+        7=>println!("the value is 7"),
+        3=>println!("the value is 3"),
+        (other)=>println!("you have other value: {}",other)
+    }
+
+    // match other value without use the value
+    let value  = 2;
+    match value {
+        3=>println!("the value is 3"),
+        _=>()// with this empty parenthesis you don't make nothing
+    }
 }
